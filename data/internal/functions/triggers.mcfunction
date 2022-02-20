@@ -23,7 +23,7 @@ execute as @a[scores={itr_deathCount=1..}] at @s run function trigger:on_death
 # killing spree
 scoreboard players remove @a[scores={itr_KillSpreeTim=1..}] itr_KillSpreeTim 1
 scoreboard players set @a[scores={itr_KillSpreeTim=..0}] itr_KillSpree 0
-scoreboard players set @a[scores={itr_pKillCount=1..}] itr_KillSpreeTim 200
+scoreboard players operation @a[scores={itr_pKillCount=1..}] itr_KillSpreeTim = @e[tag=engine,limit=1] KillSpreeTicks
 scoreboard players add @a[scores={itr_pKillCount=1..,InGame=2}] itr_KillSpree 1
 execute as @a[scores={itr_pKillCount=1..}] at @s run function trigger:killing_spree
 

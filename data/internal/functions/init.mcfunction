@@ -10,6 +10,7 @@ scoreboard objectives add itr_timer dummy
 scoreboard objectives add out_Random dummy
 scoreboard objectives add itr_KillSpree dummy
 scoreboard objectives add itr_KillSpreeTim dummy
+scoreboard objectives add KillSpreeTicks dummy
 scoreboard objectives add inp_Min dummy
 scoreboard objectives add inp_Max dummy
 scoreboard objectives add itr_temp dummy
