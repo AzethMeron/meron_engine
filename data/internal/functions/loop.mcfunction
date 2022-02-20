@@ -7,7 +7,7 @@ execute as @a[scores={itr_LeftServer=1..}] at @s run scoreboard players set @s i
 # HP regen, cooldowns, HP percentage
 execute if entity @e[tag=engine,scores={Sett_HpRegen=1}] run execute as @a at @s run function internal:hp_regen
 execute if entity @e[tag=engine,scores={Sett_SkillCD=1}] run execute as @a at @s run function internal:cooldown
-execute if entity @e[tag=engine,scores={Sett_SkillCD=1}] run kill @e[type=minecraft:barrier]
+execute if entity @e[tag=engine,scores={Sett_SkillCD=1}] run kill @e[type=item,nbt={Item:{id:"minecraft:barrier"}}]
 execute as @a at @s run function internal:hpercentage
 
 # Arrow mechanics
