@@ -1,11 +1,11 @@
-============================================================================================================
+Meron Engine v1.0  
+Created by: Azeth Meron (https://github.com/AzethMeron)  
+Minecraft Java Edition 1.17.1 (for Paper server)  
 
-Meron Engine v1.0
-Created by: Azeth Meron (https://github.com/AzethMeron)
-Minecraft Java Edition 1.17.1 (for Paper server)
+This datapack is destined to be used with multiplayer minigame maps.  
+Contains various tool that i hope will be useful for you.  
 
-This datapack is destined to be used with multiplayer minigame maps. 
-Contains various tool that i hope will be useful for you.
+---
 
 Features:
 - Triggers for various ingame events (kills, deaths).
@@ -19,16 +19,16 @@ Features:
 - Phases: lobby, game creation, ingame, spectator and outsider. Basically entire game progression is deal with.
 - Timed respawns during game (so respawn doesn't have to be instant)
 
-For easy introduxtion, check Manual. 
-For detailed description, Documentation will come in handy. 
+For easy introduxtion, check Manual.  
+For detailed description, Documentation will come in handy.   
 
-============================================================================================================
+---
 
-In short (remember this is NOT legal advice)
-- you can use this datapack in any map you create
-- you must put my name and name of this datapack ("Meron Engine") in credits of this map
+In short (remember this is NOT legal advice)  
+- you can use this datapack in any map you create  
+- you must put my name and name of this datapack ("Meron Engine") in credits of this map  
 
-============================================================================================================
+---
 
-Tl:dr read Manual, then Documentation if necessary.
-(Documentation isn't written yet tho)
+Tl:dr read Manual, then Documentation if necessary.  
+(Documentation isn't written yet tho)  
