@@ -51,4 +51,7 @@ scoreboard players set @s Cooldown_Skill_b 0
 scoreboard players set @s Cooldown_Skill_c 0
 scoreboard players set @s Cooldown_Skill_d 0
 
+scoreboard players set @s MessageKill 0
+scoreboard players set @s MessageDeath 0
+
 function trigger:initiate_stats

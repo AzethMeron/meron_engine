@@ -53,6 +53,9 @@ scoreboard objectives add Sett_ArrowCD dummy
 scoreboard objectives add Sett_HpRegen dummy
 scoreboard objectives add Sett_SkillCD dummy
 
+scoreboard objectives add MessageDeath dummy
+scoreboard objectives add MessageKill dummy
+
 # Spawning entity to be used by engine
 execute as @e[tag=engine] at @s run forceload remove ~ ~
 kill @e[tag=engine]
