@@ -1,0 +1,171 @@
+============================================================================================================
+
+Yes this is a WALL of text. Though you usually don't need to read everything.
+Take your time. And good luck :)
+
+============================================================================================================
+
+Datapack namespaces:
+- engine - functions used to setup engine
+- internal - internal functions you shouldnt modify or call at all
+- tool - useful tools like random number generator
+- trigger - functions that are called after specific ingame events. Considered low-level.
+- progression - additional functions to help with game progression. Considered high-level
+
+Very important note regarding engine: it uses persistent entities to store some information. 
+Using kill @e will turn engine unusable. So dont do it. If you must kill @e, then atleast exclude [tag=persistent]
+You can use tool:kille to safely kill @e without killing ones that are crucial for engine.
+
+Namespaces: engine, internal, tool are functions that you SHOULDN'T modify at all.
+Trigger and progressions are one you can (and should). Typically, you should make separate datapack for your map and either move entire trigger and progression folders from engine into your datapack, or just call your functions from engine datapack.
+
+============================================================================================================
+
+=== BASIC SETUP ===
+Call 'function engine:init' to create scoreboards (variables). Call it once.
+Put 'function engine:loop' in repeating command block - in the same chunk where you called engine:init (yes it is important)
+Build a little chamber for "world spawn", with grass floor (yes it is important) Call 'function engine:set_first_spawn'.
+Build a little chamber for typical respawn. Call 'function engine:set_spawn'.
+First spawn and typical respawn CANNOT be in the same place. Minimal distance: 5 blocks.
+
+This will allow you to use all basic tools provided by engine. 
+Progression for joining players: first_spawn -> trigger:initiate_stats -> trigger:first_spawn -> spawn -> trigger:spawn
+Progression for respawning players: spawn -> trigger:spawn
+
+To setup high-level tools (progression), check next section
+
+=== PROGRESSION SETUP ===
+Progression are high-level tools that you may (or may not) use.
+Using 'function progression:set_lobby' will set your current location (and orientation!) as place where player will be teleported after respawn during lobby phase.
+Using 'function progression:set_game_creation_room' and 'function progression:set_game_creation_waitroom' will set your current location (and orientation!) as place where player will be teleported after respawn during game creation phase. More about that later.
+Code reposible for that is in progression folder itself, so you can easily modify that behaviour.
+
+Functions 'spawn_XXX' are actually triggers, called automatically on respawn, based on current phase of game (check PHASES)
+To enter Game Creation Phase, use 'function progression:start_game_creation'.
+To enter Ingame Phase, use 'function progression:start_game'.
+To finish the game, use 'function progression:end_game'.
+To make player a spectator, use 'execute as :player: run function progression:make_spectator'
+
+============================================================================================================
+
+=== BUILT-IN MECHANICS ===
+Those are mechanics that can be very useful, if setted up properly.
+You can enable them by setting variable in engine:settings function to 1. Any other value will disable given feature.
+Reminder: 1 second = 20 ticks
+
+=== LEAVING SERVER CAUSES PLAYER TO RESPAWN ===
+This is a feature that heavily simplified managing phases and dealing with Outsiders.
+This cannot be changed. Anytime you rejoin the server, you're teleported to spawn and normal spawning process occurs.
+Deal with it.
+
+=== HP REGEN ===
+Engine has custom HP regeneration. 
+If you wish to use it, disable "naturalRegeneration" gamerule and set "RegenIntervalTik" variable for all players.
+How it works? Well, it applies Regeneration 3 for 1 second (which regenerates 1 HP - half of heart) every "RegenIntervalTik" ticks. 
+So if you want player to recover 1 HP every 2 seconds, set "RegenIntervalTik" to 40.
+It doesn't work with very low numbers though. Additionally, value of 0 disables regeneration at all.
+
+=== HP PERCENTAGE ===
+Another feature: always up-to-date percentageful value of HP.
+All you need to do is: set "MaxHP" variable for all players to their maximal HP value (HP, which means 2*hearts)
+Then you can get value of "HPercentage". It will always be up-to-date and contain value from 0 to 100.
+Without setting MaxHP, HPercentage contains useless trash!
+
+=== ARROW COOLDOWN ===
+Useful with ranged classes. When using this feature, all arrows will disappear after hitting ground!
+You're supposed to setup classes without infinity on bow/crossbow, and only one arrow in inventory.
+Then, after using bow/crossbow, player will receive his arrow back after "ArrowIntervalTik" ticks.
+You have to setup that time in "ArrowIntervalTik" variable. 
+Arrow will be "replaced" into last slot in hotbar (hotbar.8).
+
+=== COOLDOWN ===
+Feature to display time until cooldown on ability is over. "Inspired" by Songs of Greavesoyl :)
+It's primarly used for visual feedback, although you can use it (and you should!) for programming cooldowns itself.
+Usage is very simple: after activating skill, set variable "Cooldown_Skill_X" to number of ticks (length of cooldown). Maximal length: 600
+X should be substituted with index in hotbar, counted from 1. So hotbar.0 -> Cooldown_Skill_1 and so on
+Basically: Cooldown_Skill_1 up to Cooldown_Skill_8. Last slot (hotbar.8) is reserved for arrows.
+Cooldown_Skill_O allows you to setup cooldown for weapon.offhand
+You can call "after-cooldown effect" when Cooldown_Skill_X=1 - restoring some items or whatever.
+
+=== MULTIKILL PREVENTION ===
+Feature useful with abilities that can deal damage to players, to prevent including single kills multiple times.
+If player has "MultiKillPrevent" scoreboard set to 1, then it can only get 1 kill each 10 ticks. All other kills are straight up ignored.
+
+============================================================================================================
+
+=== GAME vs PERSISTENT ===
+There's distinction between scoreboards that are used to store total number of kills, and killcounter for specific match.
+Total number of kills must be stored in PERSISTENT scoreboard.
+Killcounter for specific match is, well, local for this match (or game), so it should be stored in GAME scoreboard.
+This distinction is only convention, but i will stick to that. So if i refer to GAME or PERSISTENT, you know what I'm talking about.
+
+=== WHAT IS VARIABLE ===
+Variable = scoreboard, im using those terms interchangeably.
+
+=== PHASES ===
+Engine (with progression module) distinguishis following phases (stages), corresponding to InGame scoreboard. Every player has own copy of InGame scoreboard.
+InGame=0 means "Lobby phase". Respawning players are managed by 'progression:spawn_lobby'. This is "normal" phase, when players are hanging out in lobby.
+InGame=1 means "Game creation phase". Respawning players are managed by 'progression:spawn_game_creation'. During this stage, most players are meant to be locked in waiting room while (random) player is configuring setting of the GAME.
+InGame=2 means "Ingame phase". Respawning players are managed by 'progression:spawn_ingame'. This is "final" phase, when actual gameplay takes place.
+InGame=3 means "Spectator". Not exactly phase. Respawning players are managed by 'progression:spawn_spectator'. It's created to deal with concept of spectator, although it doesn't change your gamemode automatically.
+Always use functions in progression to change phase of the game. You can't change value of InGame manually!
+There's also InGame=-1, signifying that player is outsider. More about this later.
+
+=== GAME CREATION PHASE ===
+Engine provides additional tool for game creation phase: Host variable.
+By default, all players have Host=0. Then, one random player gets Host=1.
+"Host" means this player is supposed to prepare any necessary settings, while rest of players are waiting.
+Host is teleported to location set with 'progression:set_game_creation_room'. All other players are teleported to 'progression:set_game_creation_waitroom'.
+You can change this approach within 'progression:spawn_game_creation'.
+
+=== TIMED INGAME SPAWN ===
+Feature that can be used during "Ingame Phase". If you want respawn to take some time, this feature is for you!
+In 'engine:settings', change 'RespawnTime' to number of ticks respawning process should last for.
+Then, create small respawning chamber, and call 'progression:set_ingame_respawn_waitroom'.
+
+============================================================================================================
+
+=== TRIGGERS ===
+Triggers are functions that are called upon certain in-game events. 
+For example, trigger:on_kill is called once per each kill.
+Use triggers instead of writing your own handlers for events, if possible. 
+Less obvious triggers:
+- first_spawn - called upon new player joining the world. Here you should initiate (reset) values of PERSISTENT scoreboards.
+- spawn - called upon player (re)spawning
+- killing_spree - called upon player achieving killing spree (multiple kills within 10 seconds). Called only in-game. 
+- death_message - called upon player dying, only if default Minecraft death messages are disabled.
+- initiate_stats - called upon resetting values of scoreboards for player, for example, during first spawn, game's end or tool:reset. Should be used with GAME-oriented scoreboards. PERSISTENT ones can be set in first_spawn.
+
+=== TOOLS ===
+Tools are function that can be called by you, to interact with engine or to perform simple tasks.
+Most notable example - tool:random, easy-to-use random number generator.
+clear_chat is just function that prints a lot of '\n' characters. 
+More tools to come, if they're not explicitely connected to engine I won't describe them here. Such tools will have description written within their MCFUNCTION file.
+Less obvious tools:
+- kille - equivalent to kill @e, BUT safe-to-use with engine.
+- reinitiate_player - resets scoreboards of player. Calls trigger:initiate_stats
+- reset_player - resets scoreboards of player, then teleports him to spawn. Calls trigger:initiate_stats
+- respawn_player - teleports player to spawn, where normal spawning process occurs
+- reset - resets the game. Restores internal variables, then calls progression:reset -> trigger:initiate_stats -> spawn -> ...
+Note: using 'reinitiate_player' or 'reset_player' in game will make engine treat that player as outsider!
+
+=== OUTSIDER ===
+You know irritating bugs caused by player logging out during one GAME, then logging in during another?
+Well with Ticketing and Outsider mechanic, it's pretty much a thing of the past.
+After calling 'progression:start_game' or 'progression:start_game_creation' Ticket for current match is generated. It's random number, within <100, 65535>
+Then this number is copied into every player. 
+If engine detects player with Ticket number different than the one generated for current match, that player is teleported to spawn and 'progression:spawn_outsider' happens.
+Default behaviour changes player into spectator if it's Game Creation of Ingame phase, or resets the player if it's Lobby phase.
+
+It's unlikely that the same number is generated as Ticket. Probability of such event is estimated to: 0.004%. [100 * 2/(65535 - 100), rounded up to be generous]
+Note: every phase has it's own value of Ticket. That's a feature, don't change that.
+
+=== PROGRESSION ===
+Most of progression functions are already described above. Connections between progression and the rest of engine are kinda complicated and messy.
+- 'start_game_creation' is function to enter game creation phase. Write your own code AFTER the one that's currently inside.
+- 'start_game' is function you shall use to start the game. Write your own code AFTER the one that's currently inside.
+- 'end_game' is function you shall use to end the game. Write your own code BEFORE the one that's currently inside.
+- 'reset' is trigger that's called when you use tool:reset and progression:end_game.
+Spawning functions are also triggers, explained in PHASES.
+
+============================================================================================================

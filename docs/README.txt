@@ -1,3 +1,24 @@
+============================================================================================================
+
+Meron Engine v1.0
+Created by: Azeth Meron (https://github.com/AzethMeron)
+Minecraft Java Edition 1.17.1 (for Paper server)
+
+This datapack is destined to be used with multiplayer minigame maps. 
+Contains various tool that i hope will be useful for you.
+
+Features:
+- Triggers for various ingame events (kills, deaths).
+- Custom death messages support.
+- Easy setup of spawn for new and respawning players.
+- Random number generator with programmable min and max value.
+- Killing spree.
+
+For easy introduxtion, check Manual. 
+For detailed description, Documentation will come in handy. 
+
+============================================================================================================
+
 BSD 3-Clause License
 
 Copyright (c) 2022, Jakub "Azeth Meron" Grzana
@@ -27,3 +48,14 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+============================================================================================================
+
+In short (remember this is NOT legal advice)
+- you can use this datapack in any map you create
+- you must put my name and name of this datapack ("Meron Engine") in credits of this map
+
+============================================================================================================
+
+Tl:dr read Manual, then Documentation if necessary.
+(Documentation isn't written yet tho)

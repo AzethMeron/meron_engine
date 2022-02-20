@@ -1,0 +1,38 @@
+Note: this is less of tutorial, more of technical information.
+You should start with reading Manual, then proceed here ONLY if you need more in-depth knowledge.
+
+Variables (READ-ONLY):
+itr_timer	(dummy)	
+out_Random	(dummy)	Output from function tool:random
+itr_KillSpree	(dummy)
+itr_KillSpreeTim	(dummy)
+itr_temp	(dummy)
+HP	(health)
+InGame	(dummy)
+Ticket	(dummy) 
+itr_joined	(dummy)
+
+Variables (EDITABLE)
+itr_pKillCount	(playerKillCount)
+itr_deathCount	(deathCount)
+inp_Min	(dummy)
+inp_Max	(dummy)
+
+Tagged entities
+"persistent" - used by all entities that are PERSISTENT - Can't be removed AT ALL
+"engine" 
+"first_spawn"
+"spawn"
+"lobby"
+"game_creation"
+
+Game progression (for players who never played on server before)
+lobby stage: first_spawn -> trigger:initiate_stats -> trigger:first_spawn -> spawn -> trigger:spawn -> progression:spawn_lobby -> lobby
+game creation stage: first_spawn -> trigger:initiate_stats -> trigger:first_spawn -> spawn -> trigger:spawn -> progression:spawn_game_creation -> game creation room
+ingame stage: first_spawn -> trigger:initiate_stats -> trigger:first_spawn -> spawn -> trigger:spawn -> progression:spawn_ingame
+
+InGame=-1 outsider
+InGame=0 lobby stage
+InGame=1 game creation stage
+InGame=2 ingame stage
+InGame=3 spectator
