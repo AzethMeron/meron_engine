@@ -46,5 +46,9 @@ scoreboard players set @s Cooldown_Skill_7 0
 scoreboard players set @s Cooldown_Skill_8 0
 scoreboard players set @s Cooldown_Skill_9 0
 scoreboard players set @s Cooldown_Skill_O 0
+scoreboard players set @s Cooldown_Skill_a 0
+scoreboard players set @s Cooldown_Skill_b 0
+scoreboard players set @s Cooldown_Skill_c 0
+scoreboard players set @s Cooldown_Skill_d 0
 
 function trigger:initiate_stats

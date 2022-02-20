@@ -323,3 +323,7 @@ scoreboard players remove @s[scores={Cooldown_Skill_6=1..}] Cooldown_Skill_6 1
 scoreboard players remove @s[scores={Cooldown_Skill_7=1..}] Cooldown_Skill_7 1
 scoreboard players remove @s[scores={Cooldown_Skill_8=1..}] Cooldown_Skill_8 1
 scoreboard players remove @s[scores={Cooldown_Skill_9=1..}] Cooldown_Skill_9 1
+scoreboard players remove @s[scores={Cooldown_Skill_a=1..}] Cooldown_Skill_a 1
+scoreboard players remove @s[scores={Cooldown_Skill_b=1..}] Cooldown_Skill_b 1
+scoreboard players remove @s[scores={Cooldown_Skill_c=1..}] Cooldown_Skill_c 1
+scoreboard players remove @s[scores={Cooldown_Skill_d=1..}] Cooldown_Skill_d 1

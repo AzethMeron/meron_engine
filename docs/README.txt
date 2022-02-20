@@ -13,6 +13,11 @@ Features:
 - Easy setup of spawn for new and respawning players.
 - Random number generator with programmable min and max value.
 - Killing spree.
+- Cooldowns for skills (with and without visuals) and for arrows.
+- Easily customizable HP regen.
+- Session ticketing (so you can't log out during one game and log into during another, causing bugs)
+- Phases: lobby, game creation, ingame, spectator and outsider. Basically entire game progression is deal with.
+- Timed respawns during game (so respawn doesn't have to be instant)
 
 For easy introduxtion, check Manual. 
 For detailed description, Documentation will come in handy. 

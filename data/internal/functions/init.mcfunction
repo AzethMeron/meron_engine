@@ -44,6 +44,10 @@ scoreboard objectives add Cooldown_Skill_7 dummy
 scoreboard objectives add Cooldown_Skill_8 dummy
 scoreboard objectives add Cooldown_Skill_9 dummy
 scoreboard objectives add Cooldown_Skill_O dummy
+scoreboard objectives add Cooldown_Skill_a dummy
+scoreboard objectives add Cooldown_Skill_b dummy
+scoreboard objectives add Cooldown_Skill_c dummy
+scoreboard objectives add Cooldown_Skill_d dummy
 
 scoreboard objectives add Sett_ArrowCD dummy
 scoreboard objectives add Sett_HpRegen dummy

@@ -84,8 +84,9 @@ It's primarly used for visual feedback, although you can use it (and you should!
 Usage is very simple: after activating skill, set variable "Cooldown_Skill_X" to number of ticks (length of cooldown). Maximal length: 600
 X should be substituted with index in hotbar, counted from 1. So hotbar.0 -> Cooldown_Skill_1 and so on
 Basically: Cooldown_Skill_1 up to Cooldown_Skill_8. Last slot (hotbar.8) is reserved for arrows.
-Cooldown_Skill_O allows you to setup cooldown for weapon.offhand
+Cooldown_Skill_O (like Orange, it's letter, not number) allows you to setup cooldown for weapon.offhand
 You can call "after-cooldown effect" when Cooldown_Skill_X=1 - restoring some items or whatever.
+Additionally, there're four cooldowns that doesn't have visual feedback: "Cooldown_Skill_a" to "Cooldown_Skill_d". You can use them for passives or smt.
 
 === MULTIKILL PREVENTION ===
 Feature useful with abilities that can deal damage to players, to prevent including single kills multiple times.
