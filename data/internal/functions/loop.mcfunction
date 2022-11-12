@@ -1,5 +1,8 @@
 # by Azeth Meron
 
+# Setup const_ variables (and TPS)
+execute as @e run function internal:constants
+
 # Teleport to spawn players who have left the game previously
 execute as @a[scores={itr_LeftServer=1..}] at @s run function tool:respawn_player
 execute as @a[scores={itr_LeftServer=1..}] at @s run scoreboard players set @s itr_LeftServer 0

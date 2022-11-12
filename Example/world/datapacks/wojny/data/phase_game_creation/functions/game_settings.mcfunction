@@ -5,7 +5,8 @@
 # Goal - whether it's game for kills (0) or to stay alive (1)
 # Score - how many kills to win, or how many lives until you lose. Default: 5
 # Map - id of battleground
-
+# RandomKits - randomize kits (1) or manual selection (0)
+# RandomTeams - randomize kits (1) or manual selection (0)
 
 # Header
 tellraw @s ["",{"text":"===== GAME CREATION MENU =====","color":"gold"}]
@@ -32,6 +33,10 @@ execute if entity @e[tag=engine, scores={Map=1}] run tellraw @s ["",{"text":"Are
 execute if entity @e[tag=engine, scores={DisplayHealth=0}] run tellraw @s ["",{"text":"Display health: No ","color":"yellow"},{"text":"[change]","color":"dark_green","clickEvent":{"action":"run_command","value":"/function phase_game_creation:change_display_health"}}]
 execute if entity @e[tag=engine, scores={DisplayHealth=1}] run tellraw @s ["",{"text":"Display health: ","color":"yellow"},{"text":"Yes ","color":"gold"},{"text":"[change]","color":"dark_green","clickEvent":{"action":"run_command","value":"/function phase_game_creation:change_display_health"}}]
 execute if entity @e[tag=engine, scores={DisplayHealth=2}] run tellraw @s ["",{"text":"Display health: ","color":"yellow"},{"text":"Percentage ","color":"gold"},{"text":"[change]","color":"dark_green","clickEvent":{"action":"run_command","value":"/function phase_game_creation:change_display_health"}}]
+
+# Random kits
+execute if entity @e[tag=engine, scores={RandomKits=0}] run tellraw @s ["",{"text":"Kit selection: Manual","color":"yellow"},{"text":" "},{"text":"[change]","color":"dark_green","clickEvent":{"action":"run_command","value":"/function phase_game_creation:change_kit_selection"}}]
+execute if entity @e[tag=engine, scores={RandomKits=1}] run tellraw @s ["",{"text":"Kit selection: Random","color":"yellow"},{"text":" "},{"text":"[change]","color":"dark_green","clickEvent":{"action":"run_command","value":"/function phase_game_creation:change_kit_selection"}}]
 
 # Footnote
 #tellraw @s ["",{"text":"==============================","color":"gold"}]

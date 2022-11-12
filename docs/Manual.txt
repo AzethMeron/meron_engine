@@ -51,7 +51,8 @@ To make player a spectator, use 'execute as :player: run function progression:ma
 === BUILT-IN MECHANICS ===
 Those are mechanics that can be very useful, if setted up properly.
 You can enable them by setting variable in engine:settings function to 1. Any other value will disable given feature.
-Reminder: 1 second = 20 ticks
+Reminder: 1 second = 20 ticks. Engine provides variable TPS which is set for every entity ingame to 20.
+So at any given moment, for any entity, you can refer to TPS by using "@s" and "TPS" scoreboard.
 
 === LEAVING SERVER CAUSES PLAYER TO RESPAWN ===
 This is a feature that heavily simplified managing phases and dealing with Outsiders.
@@ -124,6 +125,15 @@ Feature that can be used during "Ingame Phase". If you want respawn to take some
 In 'engine:settings', change 'RespawnTime' to number of ticks respawning process should last for.
 Then, create small respawning chamber, and call 'progression:set_ingame_respawn_waitroom'.
 
+=== CONSTANTS ===
+Sometimes you need to multiply or divide scoreboard by fixed value. Sadly there's no command for that in Minecraft, you can only do operations on variables.
+So engine provides some constant variables that you can use in such cases. Those are set every tick for every loaded entity on the map.
+"TPS" = 20
+"const_2" = 2
+"const_10" = 10
+"const_100" = 100
+More might be added on-demand, I don't which values are most useful.
+
 ============================================================================================================
 
 === TRIGGERS ===
@@ -148,7 +158,9 @@ Less obvious tools:
 - reset_player - resets scoreboards of player, then teleports him to spawn. Calls trigger:initiate_stats
 - respawn_player - teleports player to spawn, where normal spawning process occurs
 - reset - resets the game. Restores internal variables, then calls progression:reset -> trigger:initiate_stats -> spawn -> ...
-Note: using 'reinitiate_player' or 'reset_player' in game will make engine treat that player as outsider!
+- add_kill - increments player's killcounter by 1. Calls trigger:on_kill
+- add_death - increments player's deathcounter by 1. Calls trigger:on_death and displays death message (ONLY if using custom death messages!)
+Warning: using 'reinitiate_player' or 'reset_player' in game will make engine treat that player as outsider!
 
 === OUTSIDER ===
 You know irritating bugs caused by player logging out during one GAME, then logging in during another?

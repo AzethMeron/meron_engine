@@ -32,6 +32,9 @@ scoreboard objectives add ArrowIntervalTik dummy
 scoreboard objectives add itr_CooldownTick dummy
 scoreboard objectives add itr_LeftServer minecraft.custom:minecraft.leave_game
 
+scoreboard objectives add TPS dummy
+scoreboard objectives add RespawnSecLeft dummy
+
 scoreboard objectives add itr_MultiKillTik dummy
 scoreboard objectives add MultiKillPrevent dummy
 

@@ -1,5 +1,8 @@
 # by Azeth Meron
 
+# Setup const_ variables (and TPS)
+execute as @e run function internal:constants
+
 # Teleport to spawn players who have left the game previously
 execute as @a[scores={itr_LeftServer=1..}] at @s run function tool:respawn_player
 execute as @a[scores={itr_LeftServer=1..}] at @s run scoreboard players set @s itr_LeftServer 0
@@ -7,7 +10,7 @@ execute as @a[scores={itr_LeftServer=1..}] at @s run scoreboard players set @s i
 # HP regen, cooldowns, HP percentage
 execute if entity @e[tag=engine,scores={Sett_HpRegen=1}] run execute as @a at @s run function internal:hp_regen
 execute if entity @e[tag=engine,scores={Sett_SkillCD=1}] run execute as @a at @s run function internal:cooldown
-execute if entity @e[tag=engine,scores={Sett_SkillCD=1}] run kill @e[type=item,nbt={Item:{id:"minecraft:barrier"}}]
+execute if entity @e[tag=engine,scores={Sett_SkillCD=1}] run kill @e[type=item,nbt={Item:{id:"minecraft:gray_dye"}}]
 execute as @a at @s run function internal:hpercentage
 
 # Arrow mechanics

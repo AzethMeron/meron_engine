@@ -21,3 +21,5 @@ team join purple Purple
 #scoreboard players set @e[tag=engine] Goal 0
 #scoreboard players set @e[tag=engine] Score 5
 #scoreboard players set @e[tag=engine] DisplayHealth 0
+#scoreboard players set @e[tag=engine] RandomTeams 1
+#scoreboard players set @e[tag=engine] RandomKits 1

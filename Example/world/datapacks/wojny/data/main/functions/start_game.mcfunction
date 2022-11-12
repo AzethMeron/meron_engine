@@ -2,6 +2,7 @@
 
 execute as @a run function tool:clear_chat
 execute as @a run function kits:all
+execute as @a run function phase_game_creation:display_game_settings
 function battlegrounds:all
 
 execute if entity @e[tag=engine, scores={Mode=0}] if entity @e[tag=engine, scores={Goal=1}] run scoreboard players operation @a Lives = @e[tag=engine, limit=1] Score
