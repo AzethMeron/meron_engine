@@ -37,6 +37,9 @@ scoreboard objectives add const_2 dummy
 scoreboard objectives add const_10 dummy
 scoreboard objectives add const_100 dummy
 
+scoreboard objectives add inp_Chance dummy
+scoreboard objectives add out_Chance dummy
+
 scoreboard objectives add RespawnSecLeft dummy
 
 scoreboard objectives add itr_MultiKillTik dummy
