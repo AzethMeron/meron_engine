@@ -46,12 +46,17 @@ To enter Ingame Phase, use 'function progression:start_game'.
 To finish the game, use 'function progression:end_game'.
 To make player a spectator, use 'execute as :player: run function progression:make_spectator'
 
+=== RESETTING ===
+To reset the game, call funtion tool:reset. 
+You can add your own code in progression:reset function.
+
 ============================================================================================================
 
 === BUILT-IN MECHANICS ===
 Those are mechanics that can be very useful, if setted up properly.
 You can enable them by setting variable in engine:settings function to 1. Any other value will disable given feature.
-Reminder: 1 second = 20 ticks. Engine provides variable TPS which is set for every entity ingame to 20.
+In the same function you can setup some timers, like respawn time (see TIMED INGAME SPAWN) which takes in time in ticks.
+Reminder: 1 second = 20 ticks. Engine provides scoreboard TPS which is set for every entity to 20.
 So at any given moment, for any entity, you can refer to TPS by using "@s" and "TPS" scoreboard.
 
 === LEAVING SERVER CAUSES PLAYER TO RESPAWN ===
@@ -93,6 +98,11 @@ Additionally, there're four cooldowns that doesn't have visual feedback: "Cooldo
 Feature useful with abilities that can deal damage to players, to prevent including single kills multiple times.
 If player has "MultiKillPrevent" scoreboard set to 1, then it can only get 1 kill each 10 ticks. All other kills are straight up ignored.
 
+=== TIMED INGAME SPAWN ===
+Feature that can be used during "Ingame Phase". If you want respawn to take some time, this feature is for you!
+In 'engine:settings', change 'RespawnTime' to number of ticks respawning process should last for.
+Then, create small respawning chamber, and call 'progression:set_ingame_respawn_waitroom'.
+
 === CONSTANTS ===
 Sometimes you need to multiply or divide scoreboard by fixed value. Sadly there's no command for that in Minecraft, you can only do operations on variables.
 So engine provides some constant variables that you can use in such cases. Those are set every tick for every loaded entity on the map.
@@ -129,11 +139,6 @@ By default, all players have Host=0. Then, one random player gets Host=1.
 Host is teleported to location set with 'progression:set_game_creation_room'. All other players are teleported to 'progression:set_game_creation_waitroom'.
 You can change this approach within 'progression:spawn_game_creation'.
 
-=== TIMED INGAME SPAWN ===
-Feature that can be used during "Ingame Phase". If you want respawn to take some time, this feature is for you!
-In 'engine:settings', change 'RespawnTime' to number of ticks respawning process should last for.
-Then, create small respawning chamber, and call 'progression:set_ingame_respawn_waitroom'.
-
 ============================================================================================================
 
 === TRIGGERS ===
@@ -143,7 +148,7 @@ Use triggers instead of writing your own handlers for events, if possible.
 Less obvious triggers:
 - first_spawn - called upon new player joining the world. Here you should initiate (reset) values of PERSISTENT scoreboards.
 - spawn - called upon player (re)spawning
-- killing_spree - called upon player achieving killing spree (multiple kills within 10 seconds). Called only in-game. 
+- killing_spree - called upon player achieving killing spree (multiple kills within 10 seconds, can be changed in settings). Called only in-game. 
 - death_message - called upon player dying, only if default Minecraft death messages are disabled.
 - initiate_stats - called upon resetting values of scoreboards for player, for example, during first spawn, game's end or tool:reset. Should be used with GAME-oriented scoreboards. PERSISTENT ones can be set in first_spawn.
 
