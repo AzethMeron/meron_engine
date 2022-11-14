@@ -112,6 +112,13 @@ So engine provides some constant variables that you can use in such cases. Those
 "const_100" = 100
 More might be added on-demand, I don't remember which values are most useful.
 
+=== OTHER BUILT-IN VARIABLES ===
+HP - scoreboard with player's current hp
+HpDelta - HP change within last tick, negative for damage received, positive for regeneration and healing. Note: it includes absorption. If you eat a golden apple, HpDelta will instantly show 4 (two golden hearts). If this effect wears off, it will show -4 (cause you lost those hearts, even thought you didn't take any damage)
+DamageDealt - damage dealt within last tick
+DamageTaken - damage received within last tick
+InCombat - 1 means in combat, 0 means outside of combat. Player enters combat state by dealing or receiving damage, it lasts for number of ticks specified in engine:settings (InCombatTikLen) You can also manually trigger combat by using 'tool:enter_combat_state'
+
 ============================================================================================================
 
 === GAME vs PERSISTENT ===
@@ -165,6 +172,7 @@ Less obvious tools:
 - reset - resets the game. Restores internal variables, then calls progression:reset -> trigger:initiate_stats -> spawn -> ...
 - add_kill - increments player's killcounter by 1. Calls trigger:on_kill
 - add_death - increments player's deathcounter by 1. Calls trigger:on_death and displays death message (ONLY if using custom death messages!)
+- enter_combat_state - sets InCombat variable to 1 (safely)
 Warning: using 'reinitiate_player' or 'reset_player' in game will make engine treat that player as outsider!
 
 === OUTSIDER ===

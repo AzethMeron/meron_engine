@@ -37,6 +37,9 @@ scoreboard objectives add const_2 dummy
 scoreboard objectives add const_10 dummy
 scoreboard objectives add const_100 dummy
 
+scoreboard objectives add itr_PrevHP dummy
+scoreboard objectives add HpDelta dummy
+
 scoreboard objectives add inp_Chance dummy
 scoreboard objectives add out_Chance dummy
 
@@ -66,6 +69,12 @@ scoreboard objectives add Sett_SkillCD dummy
 
 scoreboard objectives add MessageDeath dummy
 scoreboard objectives add MessageKill dummy
+
+scoreboard objectives add DamageDealt minecraft.custom:minecraft.damage_dealt
+scoreboard objectives add DamageTaken minecraft.custom:minecraft.damage_taken
+scoreboard objectives add InCombat dummy
+scoreboard objectives add InCombatTikLen dummy
+scoreboard objectives add itr_InCombatTik dummy
 
 # Spawning entity to be used by engine
 execute as @e[tag=engine] at @s run forceload remove ~ ~

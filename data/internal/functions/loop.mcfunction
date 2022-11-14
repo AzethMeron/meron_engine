@@ -3,6 +3,10 @@
 # Setup const_ variables (and TPS)
 execute as @e run function internal:constants
 
+# HPDelta, InCombat
+execute as @a run function internal:hpdelta
+execute as @a run function internal:incombat
+
 # Teleport to spawn players who have left the game previously
 execute as @a[scores={itr_LeftServer=1..}] at @s run function tool:respawn_player
 execute as @a[scores={itr_LeftServer=1..}] at @s run scoreboard players set @s itr_LeftServer 0
@@ -34,3 +38,7 @@ execute as @e[tag=ingame_respawn_waitroom] at @s run execute as @a[distance=..2,
 scoreboard players remove @a[scores={RespawnTimeLeft=1..}] RespawnTimeLeft 1
 execute as @a[scores={RespawnTimeLeft=1}] at @s run function progression:spawn_ingame
 execute as @a[scores={RespawnTimeLeft=1..}] at @s run function progression:timed_ingame_spawn_feedback
+
+# Clean damage dealt and damage taken
+scoreboard players set @a DamageDealt 0
+scoreboard players set @a DamageTaken 0

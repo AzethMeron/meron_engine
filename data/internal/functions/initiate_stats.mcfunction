@@ -51,7 +51,14 @@ scoreboard players set @s Cooldown_Skill_b 0
 scoreboard players set @s Cooldown_Skill_c 0
 scoreboard players set @s Cooldown_Skill_d 0
 
+scoreboard players set @s HpDelta 0
+scoreboard players set @s itr_PrevHP 0
+
 scoreboard players set @s MessageKill 0
 scoreboard players set @s MessageDeath 0
+
+scoreboard players set @s DamageDealt 0
+scoreboard players set @s DamageTaken 0
+scoreboard players set @s InCombat 0
 
 function trigger:initiate_stats
