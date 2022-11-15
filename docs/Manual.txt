@@ -50,6 +50,11 @@ To make player a spectator, use 'execute as :player: run function progression:ma
 To reset the game, call funtion tool:reset. 
 You can add your own code in progression:reset function.
 
+=== GAMERULES & SETTINGS ===
+Settings are stored in engine:settings.
+Gamerules - engine:gamerules
+Change them before calling engine:init.
+
 ============================================================================================================
 
 === GAME vs PERSISTENT ===

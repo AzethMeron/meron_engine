@@ -1,7 +1,7 @@
 # by Azeth Meron
 
 # Set gamerules
-function internal:gamerules
+function engine:gamerules
 
 # Create variables
 scoreboard objectives add itr_pKillCount playerKillCount

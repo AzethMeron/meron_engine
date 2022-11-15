@@ -1,5 +1,6 @@
 # by Azeth Meron
 # @s - armorstand of engine
+# called automatically upon initiation
 
 scoreboard players set @s Sett_ArrowCD 1
 scoreboard players set @s Sett_HpRegen 1

@@ -1,4 +1,9 @@
 # by Azeth Meron
+# called automatically upon initiation
+# here you can customize gamerules
+
+# Don't change this, it would break the engine
+gamerule spawnRadius 0
 
 # Those IMO are universal for custom maps
 gamerule announceAdvancements false
@@ -17,7 +22,6 @@ gamerule doTraderSpawning false
 gamerule doWeatherCycle false
 gamerule keepInventory true
 gamerule mobGriefing false
-gamerule spawnRadius 0
 gamerule spectatorsGenerateChunks false
 
 # Those you may want to customize
