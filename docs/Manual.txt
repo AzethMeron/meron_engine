@@ -52,6 +52,26 @@ You can add your own code in progression:reset function.
 
 ============================================================================================================
 
+=== GAME vs PERSISTENT ===
+There's distinction between scoreboards that are used to store total number of kills, and killcounter for specific match.
+Total number of kills must be stored in PERSISTENT scoreboard.
+Killcounter for specific match is, well, local for this match (or game), so it should be stored in GAME scoreboard.
+This distinction is only convention, but i will stick to that. So if i refer to GAME or PERSISTENT, you know what I'm talking about.
+
+=== WHAT IS VARIABLE ===
+Variable = scoreboard, im using those terms interchangeably.
+
+=== ABOUT FUNCTIONS ===
+Functions can take multiple arguments. Usually, one of "arguments" is entity.
+For example, random number generator takes three input arguments: entity and scoreboards inp_Min, inp_Max. 
+It returns one output value: out_Random.
+It's important to read how function should be called, either in Manual or in file of the function itself.
+@s - entity means it can be any entity. 
+@s - player means it can be only player
+If there's nothing, it might mean entity isn't required, but more likely it means you're not supposed to call this function on your own.
+
+============================================================================================================
+
 === BUILT-IN MECHANICS ===
 Those are mechanics that can be very useful, if setted up properly.
 You can enable them by setting variable in engine:settings function to 1. Any other value will disable given feature.
@@ -122,15 +142,6 @@ DamageTaken - damage received within last tick
 InCombat - 1 means in combat, 0 means outside of combat. Player enters combat state by dealing or receiving damage, it lasts for number of ticks specified in engine:settings (InCombatTikLen) You can also manually trigger combat by using 'tool:enter_combat_state'
 
 ============================================================================================================
-
-=== GAME vs PERSISTENT ===
-There's distinction between scoreboards that are used to store total number of kills, and killcounter for specific match.
-Total number of kills must be stored in PERSISTENT scoreboard.
-Killcounter for specific match is, well, local for this match (or game), so it should be stored in GAME scoreboard.
-This distinction is only convention, but i will stick to that. So if i refer to GAME or PERSISTENT, you know what I'm talking about.
-
-=== WHAT IS VARIABLE ===
-Variable = scoreboard, im using those terms interchangeably.
 
 === PHASES ===
 Engine (with progression module) distinguishis following phases (stages), corresponding to InGame scoreboard. Every player has own copy of InGame scoreboard.
