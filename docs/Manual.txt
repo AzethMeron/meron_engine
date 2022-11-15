@@ -105,17 +105,19 @@ Then, create small respawning chamber, and call 'progression:set_ingame_respawn_
 
 === CONSTANTS ===
 Sometimes you need to multiply or divide scoreboard by fixed value. Sadly there's no command for that in Minecraft, you can only do operations on variables.
-So engine provides some constant variables that you can use in such cases. Those are set every tick for every loaded entity on the map.
+So engine provides some constant variables that you can use in such cases. Those are set every tick for every loaded entity on the map. 
 "TPS" = 20
+"const_-1" = -1, useful to invert sign of number
 "const_2" = 2
 "const_10" = 10
 "const_100" = 100
 More might be added on-demand, I don't remember which values are most useful.
+Note: if you summon entity, it probably will NOT have those values set until next tick. 
 
 === OTHER BUILT-IN VARIABLES ===
 HP - scoreboard with player's current hp
 HpDelta - HP change within last tick, negative for damage received, positive for regeneration and healing. Note: it includes absorption. If you eat a golden apple, HpDelta will instantly show 4 (two golden hearts). If this effect wears off, it will show -4 (cause you lost those hearts, even thought you didn't take any damage)
-DamageDealt - damage dealt within last tick
+DamageDealt - damage dealt within last tick. Doesn't include bow/crossbow damage
 DamageTaken - damage received within last tick
 InCombat - 1 means in combat, 0 means outside of combat. Player enters combat state by dealing or receiving damage, it lasts for number of ticks specified in engine:settings (InCombatTikLen) You can also manually trigger combat by using 'tool:enter_combat_state'
 

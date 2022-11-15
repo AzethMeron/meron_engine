@@ -33,6 +33,7 @@ scoreboard objectives add itr_CooldownTick dummy
 scoreboard objectives add itr_LeftServer minecraft.custom:minecraft.leave_game
 
 scoreboard objectives add TPS dummy
+scoreboard objectives add const_-1 dummy
 scoreboard objectives add const_2 dummy
 scoreboard objectives add const_10 dummy
 scoreboard objectives add const_100 dummy
