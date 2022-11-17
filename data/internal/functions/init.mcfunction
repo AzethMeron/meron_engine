@@ -77,6 +77,11 @@ scoreboard objectives add InCombat dummy
 scoreboard objectives add InCombatTikLen dummy
 scoreboard objectives add itr_InCombatTik dummy
 
+scoreboard objectives add BowUsed minecraft.used:minecraft.bow
+scoreboard objectives add CrossBowUsed minecraft.used:minecraft.crossbow
+scoreboard objectives add Sneaking minecraft.custom:minecraft.sneak_time
+scoreboard objectives add itr_SneakingPrev dummy 
+
 # Spawning entity to be used by engine
 execute as @e[tag=engine] at @s run forceload remove ~ ~
 kill @e[tag=engine]

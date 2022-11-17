@@ -145,6 +145,8 @@ HpDelta - HP change within last tick, negative for damage received, positive for
 DamageDealt - damage dealt within last tick. Doesn't include bow/crossbow damage
 DamageTaken - damage received within last tick
 InCombat - 1 means in combat, 0 means outside of combat. Player enters combat state by dealing or receiving damage, it lasts for number of ticks specified in engine:settings (InCombatTikLen) You can also manually trigger combat by using 'tool:enter_combat_state'
+BowUsed, CrossBowUsed - 1 means player used either bow or crossbow within last tick
+Sneaking - timer counting for how many ticks player has been sneaking (consecutively). So if you press Sneak button, it increases by 20 per second, but the moment you let go sneak button, it is resetted to 0.
 
 ============================================================================================================
 

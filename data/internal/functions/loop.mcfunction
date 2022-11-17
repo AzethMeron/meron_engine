@@ -39,6 +39,11 @@ scoreboard players remove @a[scores={RespawnTimeLeft=1..}] RespawnTimeLeft 1
 execute as @a[scores={RespawnTimeLeft=1}] at @s run function progression:spawn_ingame
 execute as @a[scores={RespawnTimeLeft=1..}] at @s run function progression:timed_ingame_spawn_feedback
 
-# Clean damage dealt and damage taken
+# Clean some scoreboards provided by engine
 scoreboard players set @a DamageDealt 0
 scoreboard players set @a DamageTaken 0
+scoreboard players set @a BowUsed 0
+scoreboard players set @a CrossBowUsed 0
+# Sneaking is a bit more complicated
+execute as @a[scores={Sneaking=1..}] if score @s Sneaking = @s itr_SneakingPrev run scoreboard players set @s Sneaking 0
+execute as @a run scoreboard players operation @s itr_SneakingPrev = @s Sneaking

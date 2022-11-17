@@ -61,4 +61,9 @@ scoreboard players set @s DamageDealt 0
 scoreboard players set @s DamageTaken 0
 scoreboard players set @s InCombat 0
 
+scoreboard players set @s BowUsed 0
+scoreboard players set @s CrossBowUsed 0
+scoreboard players set @s Sneaking 0
+scoreboard players set @s itr_SneakingPrev 0
+
 function trigger:initiate_stats
