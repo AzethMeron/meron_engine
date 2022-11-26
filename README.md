@@ -1,6 +1,6 @@
 Meron Engine v1.0  
 Created by: Azeth Meron (https://github.com/AzethMeron)  
-Minecraft Java Edition 1.17.1 (for Paper server)  
+Minecraft Java Edition 1.17.1+ (for Paper server)  
 
 This datapack is destined to be used with multiplayer minigame maps.  
 Contains various tool that i hope will be useful for you.  
@@ -31,4 +31,3 @@ In short (remember this is NOT legal advice)
 ---
 
 Tl:dr read Manual, then Documentation if necessary.  
-(Documentation isn't written yet tho)  

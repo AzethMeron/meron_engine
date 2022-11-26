@@ -1,38 +1,127 @@
+
+############################################################
+
 Note: this is less of tutorial, more of technical information.
 You should start with reading Manual, then proceed here ONLY if you need more in-depth knowledge.
+Created by: Azeth Meron (https://github.com/AzethMeron)  
 
-Variables (READ-ONLY):
-itr_timer	(dummy)	
-out_Random	(dummy)	Output from function tool:random
-itr_KillSpree	(dummy)
-itr_KillSpreeTim	(dummy)
-itr_temp	(dummy)
-HP	(health)
-InGame	(dummy)
-Ticket	(dummy) 
-itr_joined	(dummy)
-
-Variables (EDITABLE)
-itr_pKillCount	(playerKillCount)
-itr_deathCount	(deathCount)
-inp_Min	(dummy)
-inp_Max	(dummy)
+############################################################
 
 Tagged entities
-"persistent" - used by all entities that are PERSISTENT - Can't be removed AT ALL
-"engine" 
-"first_spawn"
-"spawn"
-"lobby"
-"game_creation"
+"persistent"	used by all entities that are PERSISTENT - Can't be removed AT ALL
+"engine"	Main armorstand used by engine, created during initialisation. @e[tag=engine,limit=1] CAN be used by YOU to store map settings and stuff like that. It's unique and "persistent" armorstand.
+"first_spawn"	Armorstand created when setting first spawn, used to initiate players who never played on this server before. Persistent.
+"spawn"	Armorstand created when setting spawn (typical one). Used for respawn of players that visited first spawn in the past. Persistent.
+"lobby"	Used by "progression", armorstand used to spawn players during lobby phase. Persistent.
+"game_creation"	Used by "progression", armorstand used to spawn players during game creation phase. It's supposed to be room with customization for incoming game. Persistent.
+"game_creation_waiting"	Used by "progression", armorstand used to spawn players during game creation phase. It's supposed to be waitroom, where all other players wait when randomly chosen host chooses settings for incoming game. Persistent.
 
-Game progression (for players who never played on server before)
-lobby stage: first_spawn -> trigger:initiate_stats -> trigger:first_spawn -> spawn -> trigger:spawn -> progression:spawn_lobby -> lobby
+Why first spawn?
+Meron Engine uses VERY old way of handling new players. 
+Basically, you can change spawnpoint for each individual player, but keep new players respawning at global spawn point.
+So, i keep global spawn point at "first_spawn", then in spawning process i set for any new player spawnpoint to "spawn".
+
+############################################################
+
+Spawning sequence (for players who never played on server before)
+lobby phase: first_spawn -> trigger:initiate_stats -> trigger:first_spawn -> spawn -> trigger:spawn -> progression:spawn_lobby -> lobby
 game creation stage: first_spawn -> trigger:initiate_stats -> trigger:first_spawn -> spawn -> trigger:spawn -> progression:spawn_game_creation -> game creation room
 ingame stage: first_spawn -> trigger:initiate_stats -> trigger:first_spawn -> spawn -> trigger:spawn -> progression:spawn_ingame
 
 InGame=-1 outsider
-InGame=0 lobby stage
-InGame=1 game creation stage
-InGame=2 ingame stage
+InGame=0 lobby phase
+InGame=1 game creation phase
+InGame=2 ingame phase
 InGame=3 spectator
+ 
+############################################################
+
+This is a list of all scoreboards used by engine, with brief description. I will try to keep it updated.
+Decided to add notation for valid "vessel" of given scoreboard. Many scoreboards only make sense in specific (tho logical) cases.
+@engine - refers to @e[tag=engine,limit=1] entity, main entity of the engine.
+@a - refers to any player.
+@e - refers to any entity
+
+VARIABLES (editable)
+KillSpreeTicks dummy	- @engine, time (in ticks) between kills for kill to count to Killing Spree
+inp_Min dummy	- @e, minimal (>=) value for RNG - tools:random
+inp_Max dummy	- @e, maximal (<=) value for RNG - tools:random 
+Host dummy	- @a, whether player is a Host of game currently created game (Host=1) or not (Host=0). Used only during game creation phase.
+RespawnTime dummy	- @engine, time (in ticks) how long respawn during in-game phase should take.
+MaxHP dummy	- @a, maximal HP of given player, you must set this manually to use HPPercentage.
+RegenIntervalTik dummy	- @engine, time (in ticks) between regeneration of 1 HP. In other words: regenerate 1 HP every RegenIntervalTik ticks.
+inp_Chance dummy	- @e, input for tools:chance function, 0..100
+ArrowIntervalTik dummy	- @engine,  time (in ticks) - cooldown for arrow, after shooting bow/crossbow get arrow back after ArrowIntervalTik
+MultiKillPrevent dummy	- @a, if set to 1, player can only get single kill within 10 ticks (other kills are ignored) It's useful when making skills that may - but not must - increase killcounter on their own, you can use tools:add_kill to add kill manually. Multikill prevention takes care of "doublecounting" in such cases.
+Sett_ArrowCD dummy	- @engine, Cooldown for arrows enabled (1) or disabled (0)
+Sett_HpRegen dummy	- @engine, Custom HP regeneration enabled (1) or disabled (0)
+Sett_SkillCD dummy	- @engine, Skill cooldowns enabled (1) or disabled (0). If disabled, all Cooldown_Skill_ variables are IGNORED by engine
+InCombatTikLen dummy	- @engine, time (in ticks) how long players stays in combat after dealing/receiving damage (used for InCombat variable)
+
+VARIABLES (Cooldowns)
+Ok seperate category cuz those work the same way (pretty much)
+Each of them, if > 0, is decreased by 1 every tick. You can set them to any value, then wait until Cooldown_...=1 and call post-cooldown function or smt.
+variables 1 to 9 and O have visual feedback, read more in Manual/test on your own. a to d are invisible, can be used for passives.
+All cooldown variables refer to @a
+Cooldown_Skill_1 dummy
+Cooldown_Skill_2 dummy
+Cooldown_Skill_3 dummy
+Cooldown_Skill_4 dummy
+Cooldown_Skill_5 dummy
+Cooldown_Skill_6 dummy
+Cooldown_Skill_7 dummy
+Cooldown_Skill_8 dummy
+Cooldown_Skill_9 dummy
+Cooldown_Skill_O dummy
+Cooldown_Skill_a dummy
+Cooldown_Skill_b dummy
+Cooldown_Skill_c dummy
+Cooldown_Skill_d dummy
+
+VARIABLES (READ-ONLY, DO NOT CHANGE THEM MANUALLY)
+out_Random dummy	- @e, output from RNG - tools:random
+HP health	- @a, Current Health of given player
+InGame dummy	- @a and @engine, Phase in which player (or game in general) currently is
+RespawnTimeLeft dummy	- @a, time (in ticks) remaining for the player to be respawned (only during respawning, if there's timer for it)
+RespawnSecLeft dummy	- @a, time (in seconds) remaining for the player to be respawned
+Ticket dummy	- @a and @engine, random number (100..65535) that identifies every particular game
+HPercentage dummy	- @a, value in percentage (0..100) respresenting percentage of health (HP/MaxHP * 100). Only works if MaxHP is set.
+TPS dummy	- @e, constant set for every entity each tick, equals 20. Note: it might not be set for freshly summoned entities.
+const_-1 dummy	- @e, constant set for every entity each tick, equals -1. Note: it might not be set for freshly summoned entities.
+const_2 dummy	- @e, constant set for every entity each tick, equals 2. Note: it might not be set for freshly summoned entities.
+const_10 dummy	- @e, constant set for every entity each tick, equals 10. Note: it might not be set for freshly summoned entities.
+const_100 dummy	- @e, constant set for every entity each tick, equals 100. Note: it might not be set for freshly summoned entities.
+out_Chance dummy	- @e, result from tools:chance
+HpDelta dummy	- @a, change in HP from previous to current tick. negative for damage received, positive for regenerated. End of absorption effect will also be detected with negtive HpDelta
+MessageDeath dummy	- @a, variable allowing you to find player who died, used in custom death messages ( @a[scores={MessageDeath=1..}] )
+MessageKill dummy	- @a, variable allowing you to find player who killed another player, used in custom death messages ( @a[scores={MessageKill=1..}] )
+DamageDealt minecraft.custom:minecraft.damage_dealt	- @a, value of damage dealt within previous tick
+DamageTaken minecraft.custom:minecraft.damage_taken	- @a, value of damage received within previous tick
+InCombat dummy	- @a, whether player received/dealth damage recently (1) or not (0)
+BowUsed minecraft.used:minecraft.bow	- @a, whether player used bow during previous tick (1) or not (0)
+CrossBowUsed minecraft.used:minecraft.crossbow	- @a, whether player used crossbow during previous tick (1) or not (0)
+Sneaking minecraft.custom:minecraft.sneak_time	- @a, time (in ticks) spent continuously sneaking, resets to 0 once sneak button is released.
+
+VARIABLES (those might be of interest to you - still bad idea to use them directly)
+itr_pKillCount playerKillCount	- @a, internal counter of kills, calls trigger if > 0, then decreases by 1
+itr_deathCount deathCount	- @a, internal counter of deaths, calls trigger if > 0, then decreases by 1
+itr_BowUsed minecraft.used:minecraft.bow	- @a, used to detect if bow was used (for arrow cooldowns, it uses separate scoreboards than BowUsed... long story)
+itr_CrossBowUsed minecraft.used:minecraft.crossbow	- @a, used to detect if crossbow was used (for arrow cooldowns, it uses separate scoreboards than CrossBowUsed... long story)
+itr_DroppedArrow minecraft.dropped:minecraft.arrow	- @a, used to detect whether player dropped his arrow (arrow cooldowns)
+itr_LeftServer minecraft.custom:minecraft.leave_game	- @a, used to detect whether player logged of the server
+
+VARIABLES (unimportant ones - for you, atleast)
+Not going to describe them now, i honestly don't remember their purpose atm, but really, if you try to do something with them: stop.
+itr_timer dummy
+itr_KillSpree dummy
+itr_KillSpreeTim dummy
+itr_temp dummy
+itr_joined dummy
+itr_regen dummy
+itr_CooldownTick dummy
+itr_PrevHP dummy
+itr_MultiKillTik dummy
+itr_InCombatTik dummy
+itr_SneakingPrev dummy 
+
+############################################################
