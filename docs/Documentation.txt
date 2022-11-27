@@ -25,8 +25,8 @@ So, i keep global spawn point at "first_spawn", then in spawning process i set f
 
 Spawning sequence (for players who never played on server before)
 lobby phase: first_spawn -> trigger:initiate_stats -> trigger:first_spawn -> spawn -> trigger:spawn -> progression:spawn_lobby -> lobby
-game creation stage: first_spawn -> trigger:initiate_stats -> trigger:first_spawn -> spawn -> trigger:spawn -> progression:spawn_game_creation -> game creation room
-ingame stage: first_spawn -> trigger:initiate_stats -> trigger:first_spawn -> spawn -> trigger:spawn -> progression:spawn_ingame
+game creation phase: first_spawn -> trigger:initiate_stats -> trigger:first_spawn -> spawn -> trigger:spawn -> progression:spawn_game_creation -> game creation room
+ingame phase: first_spawn -> trigger:initiate_stats -> trigger:first_spawn -> spawn -> trigger:spawn -> progression:spawn_ingame
 
 InGame=-1 outsider
 InGame=0 lobby phase
@@ -40,9 +40,9 @@ This is a list of all scoreboards used by engine, with brief description. I will
 Decided to add notation for valid "vessel" of given scoreboard. Many scoreboards only make sense in specific (tho logical) cases.
 @engine - refers to @e[tag=engine,limit=1] entity, main entity of the engine.
 @a - refers to any player.
-@e - refers to any entity
+@e - refers to any entity.
 
-VARIABLES (editable)
+VARIABLES (Editable)
 KillSpreeTicks dummy	- @engine, time (in ticks) between kills for kill to count to Killing Spree
 inp_Min dummy	- @e, minimal (>=) value for RNG - tools:random
 inp_Max dummy	- @e, maximal (<=) value for RNG - tools:random 
@@ -58,7 +58,7 @@ Sett_HpRegen dummy	- @engine, Custom HP regeneration enabled (1) or disabled (0)
 Sett_SkillCD dummy	- @engine, Skill cooldowns enabled (1) or disabled (0). If disabled, all Cooldown_Skill_ variables are IGNORED by engine
 InCombatTikLen dummy	- @engine, time (in ticks) how long players stays in combat after dealing/receiving damage (used for InCombat variable)
 
-VARIABLES (Cooldowns)
+VARIABLES (Editable - cooldowns)
 Ok seperate category cuz those work the same way (pretty much)
 Each of them, if > 0, is decreased by 1 every tick. You can set them to any value, then wait until Cooldown_...=1 and call post-cooldown function or smt.
 variables 1 to 9 and O have visual feedback, read more in Manual/test on your own. a to d are invisible, can be used for passives.
@@ -92,7 +92,7 @@ const_2 dummy	- @e, constant set for every entity each tick, equals 2. Note: it 
 const_10 dummy	- @e, constant set for every entity each tick, equals 10. Note: it might not be set for freshly summoned entities.
 const_100 dummy	- @e, constant set for every entity each tick, equals 100. Note: it might not be set for freshly summoned entities.
 out_Chance dummy	- @e, result from tools:chance
-HpDelta dummy	- @a, change in HP from previous to current tick. negative for damage received, positive for regenerated. End of absorption effect will also be detected with negtive HpDelta
+HpDelta dummy	- @a, change in HP from previous to current tick. negative for damage received, positive for regenerated. End of absorption effect will also be detected with negative HpDelta
 MessageDeath dummy	- @a, variable allowing you to find player who died, used in custom death messages ( @a[scores={MessageDeath=1..}] )
 MessageKill dummy	- @a, variable allowing you to find player who killed another player, used in custom death messages ( @a[scores={MessageKill=1..}] )
 DamageDealt minecraft.custom:minecraft.damage_dealt	- @a, value of damage dealt within previous tick
@@ -102,26 +102,26 @@ BowUsed minecraft.used:minecraft.bow	- @a, whether player used bow during previo
 CrossBowUsed minecraft.used:minecraft.crossbow	- @a, whether player used crossbow during previous tick (1) or not (0)
 Sneaking minecraft.custom:minecraft.sneak_time	- @a, time (in ticks) spent continuously sneaking, resets to 0 once sneak button is released.
 
-VARIABLES (those might be of interest to you - still bad idea to use them directly)
+VARIABLES (Internal - this few can be read/modified in some scenarios, but it's bad practice, don't do it if you can help it)
 itr_pKillCount playerKillCount	- @a, internal counter of kills, calls trigger if > 0, then decreases by 1
 itr_deathCount deathCount	- @a, internal counter of deaths, calls trigger if > 0, then decreases by 1
-itr_BowUsed minecraft.used:minecraft.bow	- @a, used to detect if bow was used (for arrow cooldowns, it uses separate scoreboards than BowUsed... long story)
-itr_CrossBowUsed minecraft.used:minecraft.crossbow	- @a, used to detect if crossbow was used (for arrow cooldowns, it uses separate scoreboards than CrossBowUsed... long story)
-itr_DroppedArrow minecraft.dropped:minecraft.arrow	- @a, used to detect whether player dropped his arrow (arrow cooldowns)
-itr_LeftServer minecraft.custom:minecraft.leave_game	- @a, used to detect whether player logged of the server
+itr_BowUsed minecraft.used:minecraft.bow	- @a, internal counter of bow uses (for arrow cooldowns), when > 0 then decreases by 1 and starts cooldown for arrow
+itr_CrossBowUsed minecraft.used:minecraft.crossbow	- @a, internal counter of crossbow uses (for arrow cooldowns), when > 0 then decreases by 1 and starts cooldown for arrow
+itr_DroppedArrow minecraft.dropped:minecraft.arrow	- @a, internal counter of dropped arrows, used for arrow cooldowns, when > 0 then decreases by 1 and starts cooldown for arrow
+itr_LeftServer minecraft.custom:minecraft.leave_game	- @a, whether player logged in within last tick (1) or not (0)
+itr_KillSpree dummy	- @a, counter for number of consecutive kills achieved within time KillSpreeTicks
 
-VARIABLES (unimportant ones - for you, atleast)
-Not going to describe them now, i honestly don't remember their purpose atm, but really, if you try to do something with them: stop.
-itr_timer dummy
-itr_KillSpree dummy
-itr_KillSpreeTim dummy
-itr_temp dummy
-itr_joined dummy
-itr_regen dummy
-itr_CooldownTick dummy
-itr_PrevHP dummy
-itr_MultiKillTik dummy
-itr_InCombatTik dummy
-itr_SneakingPrev dummy 
+VARIABLES (Strictly internal)
+Those variables are temporary/counters/internal to the degree they're NOT useful outside engine.
+itr_timer dummy	- @engine, timer used to call triggers:each_second (counts to 20 ticks, call function, then resets)
+itr_KillSpreeTim dummy	- @a, timer which resets every kill, and which counts to KillSpreeTicks. When it reaches that value, it resets Killing Spree.
+itr_temp dummy	- I don't remember, probably temporary variable used in various circumstances
+itr_joined dummy	- @a, whether player got first-spawned (1) or not yet (undefined)
+itr_regen dummy	- @a, timer which grants regeneration each RegenIntervalTik
+itr_CooldownTick dummy	- I don't remember, will check if anyone ever requests it (which i deem unlikely)
+itr_PrevHP dummy	- @a, HP of the player in PREVIOUS tick, used to calculate HpDelta
+itr_MultiKillTik dummy	- @a, timer for Multikill Prevention system
+itr_InCombatTik dummy	- @a, timer for InCombat
+itr_SneakingPrev dummy 	- @a, value of Sneaking in previous tick. If it's the same as in current tick, then player stopped sneaking and Sneaking resets to 0.
 
 ############################################################
