@@ -75,7 +75,20 @@ trigger:on_death	- called on death for any player @s
 trigger:on_kill 	- called on kill for any player @s
 
 Functions - progression:
-TODO
+progression:start_game_creation 	- function to be called in order to enter game creation phase (InGame=1)
+progression:start_game	- function to be called in order to enter ingame phase (InGame=2)
+progression:end_game	- function to be called at the very end of the game (calls tool:reset)
+progression:make_spectator	- securely turns player @s to spectator (InGame=3) NOTE: it doesn't change gamemode by default, only InGame var
+progression:set_lobby 	- creates armorstand at @s, marking this place and orientation as spawn for lobby phase (InGame=0)
+progression:set_game_creation_room 	- creates armorstand at @s, marking this place and orientation as spawn for game creation phase (InGame=1) for player with (Host=1). This is the place where you can customize game settings
+progression:set_game_creation_waitroom 	- creates armorstand at @s, marking this place and orientation as spawn for game creation phase (InGame=1) for player with (Host=0). This is waitroom for others while Host customizes game
+progression:set_ingame_respawn_waitroom	- creates armorstand at @s, marking this place as waitroom for killed player awaiting respawn during (InGame=2). Only when Timed Respawn is used.
+progression:spawn_game_creation 	- Trigger, called for player @s on respawn during InGame=1
+progression:spawn_ingame	- Trigger, called for player @s on respawn during InGame=2
+progression:spawn_lobby 	- Trigger, called for player @s on respawn during InGame=0
+progression:spawn_outsider	- Trigger, called for player @s on respawn once it's detected to have incorrect value of Ticket
+progression:spawn_spectator	- Trigger, called for player @s[scores={InGame=3}] on respawn during InGame=1
+progression:timed_ingame_spawn_feedback 	- Trigger, called each tick for player @s waiting his respawn in waiting room (only when Timed Respawn is used)
 
 Functions - internal:
 internal:arrow_cd	- Arrow Cooldown implementation
